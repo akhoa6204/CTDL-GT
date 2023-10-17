@@ -107,5 +107,4 @@ music.Add(4)
 print(music.Next(3))
 print(music.Pre(0))
 music.Shuffle()
-music.Print()
-                    
+music.Print()                 
