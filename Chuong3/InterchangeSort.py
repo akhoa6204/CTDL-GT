@@ -1,8 +1,15 @@
-def interchange(n):
-    for i in range(0, len(n) - 1):
-        for j in range(i + 1, len(n)):
-            if n[i] > n[j] : 
-                n[i], n[j] = n[j], n[i]
+# def interchange(n):
+#     for i in range(0, len(n) - 1):
+#         for j in range(i + 1, len(n)):
+#             if n[i] > n[j] : 
+#                 n[i], n[j] = n[j], n[i]
+
+def interchange(arr): 
+    for i in range(len(arr) - 1):
+        for j in range (i + 1, len(arr)):
+            if arr[i] > arr[j]: 
+                arr[i], arr[j] = arr[j], arr[i]
+                
 n = [5, 3, 2, 4, 6, 8, 1, 11, 9]
 interchange(n)
 print(*n)
