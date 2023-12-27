@@ -1,10 +1,11 @@
-def interchange(arr): 
+def interchange(arr): # BigO(n^2) tốt lẫn xấu 
     for i in range(len(arr) - 1):
         for j in range(i + 1, len(arr)):
             if arr[i] > arr[j]: 
                 arr[i], arr[j] = arr[j], arr[i]
+                
 
-def merge(arr):
+def merge(arr): # O(nlogn)
     if len(arr) < 2: return arr
     else: 
         left = arr[: (len(arr) // 2)]
@@ -29,7 +30,7 @@ def merge(arr):
             j += 1
             k += 1 
 
-def quick(arr): 
+def quick(arr): # O(nlogn) tb, xấu có thể lên đến n^2
     if len(arr) < 2: return arr 
     else: 
         mid = [x for x in arr if x == arr[len(arr) // 2]]
@@ -37,13 +38,13 @@ def quick(arr):
         right = [x for x in arr if x > arr[len(arr) // 2]]
         return quick(left) + mid + quick(right) 
 
-def buble(arr): 
+def buble(arr): # BigO(n^2), tốt O(n)
     for i in range(len(arr)):
         for j in range(len(arr) - i - 1):
             if arr[j] > arr[j + 1]: 
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
 
-def selection(arr): 
+def selection(arr): # BigO(n^2), tốt O(n)
     for i in range(len(arr)): 
         min = i
         for j in range(i, len(arr)): 
@@ -51,7 +52,7 @@ def selection(arr):
                 min = j 
         arr[i], arr[min] = arr[min], arr[i]
 
-def insertion(arr): 
+def insertion(arr): # BigO(n^2), tốt O(n)   
     for i in range(1, len(arr)): 
         cur = arr[i]
         j = i - 1

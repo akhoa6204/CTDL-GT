@@ -2,8 +2,6 @@
 def Binary(n, a) :
     low = 0 
     high = len(n) - 1 
-    mid = (high + low) // 2
-    mid_value = n[mid]
     while low <= high :
         mid = (high + low) // 2
         mid_value = n[mid] 
