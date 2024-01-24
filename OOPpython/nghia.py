@@ -1,21 +1,22 @@
 class sinhvien: 
-    def __init__(self, id, name, Class, tp1, tp2):
+    def __init__(self, id, name, tp1, tp2):
         self.id = id 
         self.name = name 
-        self.Class = Class 
+        self.Class = id[7:9] + "." + id[10]
         self.tp1 = tp1
         self.tp2 = tp2 
         self.dtb = None
         self.grade = None
     
-    def Print(self): 
+    def Print(self):    
         print(f"[ {self.id} ] [ {self.name} ] [ {self.Class} ] [ {self.tp1} ] [ {self.tp2} ]", end= " ")
-        if self.dtb: 
+        if self.dtb is not None: 
             print(f"[ {self.dtb} ]",end = " ")
+            if self.grade is not None: 
+                print(f"[ {self.grade} ]")
+            else: print()
         else: print()
-        if self.grade: 
-            print(f"[ {self.grade} ]")
-        else: print()
+
 
 class dssv:
     def __init__(self): 
@@ -84,35 +85,51 @@ class dssv:
             tong += sv.tp2
         print(f"Điểm tb tp2 của toàn bộ sinh viên: {tong/len(self.ds)}")
     def min(self):
-        min = self.ds.dtb[0]
+        min = self.ds[0].dtb
         for sv in self.ds:
-            sv.dtb < min 
-            min = sv.dtb
+            if sv.dtb < min :
+                min = sv.dtb
         for sv in self.ds:
             if sv.dtb == min: 
                 sv.Print()
     def max(self):
-        max = self.ds.dtb[0]
+        max = self.ds[0].dtb
         for sv in self.ds:
-            sv.dtb > max
-            max = sv.dtb
+            if sv.dtb > max:
+                max = sv.dtb
         for sv in self.ds:
             if sv.dtb == max: 
                 sv.Print()
     def xeploai(self):
         for sv in self.ds:
-            if sv.dtb is not None:
-                if sv.dtb >= 8.5:
-                    sv.grade = "Học lực giỏi"
-                elif sv.dtb >= 7:
-                    sv.grade = "Học lực Khá"
-                elif sv.dtb >= 5.5:
-                    sv.grade = "Học lực Trung bình"
-                elif sv.dtb >= 4:
-                    sv.grade = "Học lực Yếu"
-                else : 
-                    sv.grade = "Học lực Kém"
+            if sv.dtb >= 8.5:
+                sv.grade = "Học lực giỏi"
+            elif sv.dtb >= 7:
+                sv.grade = "Học lực Khá"
+            elif sv.dtb >= 5.5:
+                sv.grade = "Học lực Trung bình"
+            elif sv.dtb >= 4:
+                sv.grade = "Học lực Yếu"
+            else : 
+                sv.grade = "Học lực Kém"
         print("Đã xếp loại học lực cho toàn bộ sinh viên")
+    def sapxep(self): 
+        lops = []
+        for sv in self.ds: 
+            if sv.Class not in lops: 
+                lops.append(sv.Class)
+        for lop in lops: 
+            print(f"-----{lop}-----") 
+            tunglop =[]
+            for sv in self.ds: 
+                if sv.Class == lop: 
+                    tunglop.append(sv) 
+            for i in range(len(tunglop) - 1):
+                for j in range (i + 1, len(tunglop)):
+                    if tunglop[i].dtb < tunglop[j].dtb:
+                        tunglop[i], tunglop[j] = tunglop[j], tunglop[i]   
+            for sv in tunglop:
+                sv.Print()
 DS = dssv()
 print('<<<-------------------------------------------------------------------')
 print('*                               * M E N U *                          *')
@@ -129,14 +146,18 @@ print('*   10. Xep loai hoc luc cho tung sinh vien                          *')
 print('*   0. Thoat khoi chuong trinh                                       *')
 print('------------------------------------------------------------------->>>')
 while True :
-    n= int(input("Chọn phương thức: "))
+    n = int(input("Chọn phương thức: "))
     if n == 0: 
         print("Dừng chương trình")
         break 
     elif n == 1: 
-        id = int(input("id: "))
+        while True:
+            id = input("id: ")
+            if len(id) == 12 and id.isdigit(): 
+                break
+            else: 
+                print("id phải là số và có độ dài là 12")
         name = input("name: ")
-        Class = input("class: ")
         while True: 
             tp1 = float(input("tp1: "))
             tp2 = float(input("tp2: "))
@@ -148,7 +169,7 @@ while True :
                 print("Đã tồn tại id trong dssv")
                 break
         else:
-            sv = sinhvien(id, name, Class, tp1, tp2)
+            sv = sinhvien(id, name, tp1, tp2)
             DS.them(sv) 
     elif n == 2: 
         id = int(input("id cần xóa: "))
@@ -167,10 +188,14 @@ while True :
     elif n == 6:
         DS.dtbtpAll() 
     elif n== 7: 
+        DS.dtbAll()
         DS.min()
     elif n == 8:
+        DS.dtbAll()
         DS.max()    
     elif n== 9: 
-        continue
+        DS.dtbAll()
+        DS.sapxep()
     elif n == 10:
+        DS.dtbAll()
         DS.xeploai()   
